@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday & Sweet Dreams</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden; 
+         
+            background-image: url('lofi.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+        .handwritten {
+            font-family: 'Caveat', cursive;
+        }
+   
+        .fade-in {
+            animation: fadeInAnimation 3s ease-in forwards;
+            opacity: 0;
+        }
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1.5s; }
+        .delay-3 { animation-delay: 2.5s; }
+        .delay-4 { animation-delay: 3.5s; } 
+    </style>
+</head>
+<body>
+
+    <div class="relative min-h-screen flex flex-col items-start justify-center p-8 md:p-16 text-left">
+        
+        <div class="relative z-10 max-w-md w-full bg-white/50 backdrop-blur-sm p-8 rounded-lg shadow-lg">
+
+            <h1 class="handwritten text-6xl md:text-7xl text-indigo-900 drop-shadow-lg fade-in delay-1">
+                Happy Birthday Priyankaaa💫
+            </h1>
+
+            <p class="mt-6 text-lg md:text-xl text-gray-800 fade-in delay-2">
+                Bahut thak gyi ho ab rest krooo.
+            </p>
+
+            <p class="mt-4 text-md text-gray-700 fade-in delay-3">
+                Sooo jaooo ab. Good Night. Sweet dreams. Take Care
+            </p>
+
+        </div>
+
+        <div class="relative z-30 mt-6 flex space-x-4 fade-in delay-4">
+            <a href="./starlight.html" class="bg-white/50 backdrop-blur-sm text-indigo-900 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-white/75 transition duration-300">
+                View Stars
+            </a>
+            <button id="nightButton" class="bg-white/50 backdrop-blur-sm text-indigo-900 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-white/75 transition duration-300">
+                Good Night
+            </button>
+        </div>
+
+    </div>
+
+    <div id="blackout" class="fixed top-0 left-0 w-full h-full bg-black opacity-0 pointer-events-none transition-opacity duration-2000 z-20"></div>
+
+    <script>
+        document.getElementById('nightButton').addEventListener('click', () => {
+            const blackoutScreen = document.getElementById('blackout');
+            const nightButton = document.getElementById('nightButton');
+            const viewStarsButton = document.querySelector('a');
+            
+            blackoutScreen.style.opacity = '0.85';
+            blackoutScreen.classList.remove('pointer-events-none');
+            
+            nightButton.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
+

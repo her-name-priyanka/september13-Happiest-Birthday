@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Birthday Party Just For You!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #FDF8F0; 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3.font-script {
+            font-family: 'Pacifico', cursive;
+        }
+        .bg-coffee { background-color: #6F4E37; }
+        .text-coffee { color: #6F4E37; }
+        .text-gold { color: #D4AF37; }
+        .bg-cream { background-color: #FDF8F0; }
+        .text-cream { color: #FDF8F0; }
+        .scroll-smooth { scroll-behavior: smooth; }
+        .gallery-img {
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .menu-item {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .menu-item:hover {
+            transform: translateX(10px);
+            background-color: #F5EADD;
+        }
+        /* Party Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .pulse-button {
+            animation: pulse 2s infinite;
+        }
+        .confetti {
+            width: 10px;
+            height: 10px;
+            position: fixed;
+            top: -20px;
+            opacity: 0.8;
+            border-radius: 50%;
+            animation: drop 4s linear infinite;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0vh) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotateZ(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-cream text-coffee scroll-smooth">
+    <div id="confetti-container"></div>
+    
+    <a href="./cake.html" target="_blank" rel="noopener noreferrer" class="fixed top-1/2 left-4 z-50 -translate-y-1/2 h-12 px-4 rounded-full flex items-center justify-center gap-2 bg-black/20 backdrop-blur-md border border-white/30 shadow-lg transition-all duration-300 hover:bg-white/30 hover:scale-110 text-white font-semibold">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+    <span>Eat the Cake</span>
+</a>
+
+<a href="./starlight.html" target="_blank" rel="noopener noreferrer" class="fixed top-1/2 right-4 z-50 -translate-y-1/2 h-12 px-4 rounded-full flex items-center justify-center gap-2 bg-black/20 backdrop-blur-md border border-white/30 shadow-lg transition-all duration-300 hover:bg-white/30 hover:scale-110 text-white font-semibold">
+   <span>Listen Music under Stars</span>
+   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+   </svg>
+</a>
+
+    <main>
+        <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center bg-cover bg-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2070&auto-format=fit=crop');">
+            <h1 class="text-6xl md:text-8xl text-white mb-8 font-script" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.7);">Let's Celebrate You!</h1>
+            <div class="bg-black/20 backdrop-blur-lg border border-white/30 p-6 rounded-xl shadow-2xl fade-in max-w-xs mx-auto text-white">
+                <p class="text-sm md:text-base text-gray-200 mb-6">Happy Birthday Priyankaaa💫 Your favorite corner in this little cafe is reserved for you today. Let the aroma of fresh coffee and the warmth of good company fill your special day with joy.</p>
+                <a href="#gallery" class="bg-gold/90 hover:bg-gold text-coffee font-bold py-2 px-5 rounded-full transition-colors duration-300 text-sm pulse-button inline-block">See The Memories!</a>
+            </div>
+        </section>
+
+        <section id="gallery" class="py-20 bg-cream">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-5xl font-bold text-coffee mb-2">Café Flashbacks</h2>
+                <p class="text-gray-600 mb-12">The highlight reel of your favourite moments.</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="fade-in" style="animation-delay: 0.1s;"><img src="./latte.jpg" alt="A cup of latte art" class="gallery-img rounded-lg shadow-md"></div>
+                    <div class="fade-in" style="animation-delay: 0.2s;"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop" alt="Delicious pastries" class="gallery-img rounded-lg shadow-md"></div>
+                    <div class="fade-in" style="animation-delay: 0.3s;"><img src="./rest.jpg" alt="Friends chatting in a cafe" class="gallery-img rounded-lg shadow-md"></div>
+                    <div class="fade-in" style="animation-delay: 0.4s;"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=400&auto=format&fit=crop" alt="A cozy cafe corner" class="gallery-img rounded-lg shadow-md"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="py-20" style="background: linear-gradient(180deg, #FDF8F0 0%, #F5EADD 100%);">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl mx-auto bg-white/50 p-8 md:p-12 rounded-lg shadow-lg border-2 border-gold">
+                    <h2 class="text-5xl font-bold text-center text-coffee mb-2">The Party Menu</h2>
+                    <p class="text-center text-gray-600 mb-10">A special selection of birthday toasts and wishes, served with a sparkle!</p>
+                    
+                    <div class="divide-y-2 divide-gold/50">
+                        <div class="menu-item p-4">
+                            <h3 class="text-2xl font-semibold text-coffee font-script">Sparkling Sunrise Mimosa</h3>
+                            <p class="text-gray-600">A toast to a year ahead that's as bright and bubbly as you are. Cheers to new adventures!</p>
+                        </div>
+                        <div class="menu-item p-4">
+                            <h3 class="text-2xl font-semibold text-coffee font-script">Confetti Pop Frappé</h3>
+                            <p class="text-gray-600">A blast of energy and fun for your special day. May your life be filled with moments worth celebrating!</p>
+                        </div>
+                        <div class="menu-item p-4">
+                            <h3 class="text-2xl font-semibold text-coffee font-script">Giggle & Glow Latte</h3>
+                            <p class="text-gray-600">A warm blend of endless laughter and joy. Here’s to glowing up and never stop giggling!</p>
+                        </div>
+                         <div class="menu-item p-4">
+                            <h3 class="text-2xl font-semibold text-coffee font-script">The Birthday Cake Extravaganza</h3>
+                            <p class="text-gray-600">Because it’s not a party without cake! Wishing you the sweetest year filled with all your favorite things.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const confettiContainer = document.getElementById('confetti-container');
+        const confettiCount = 100;
+        const colors = ['#D4AF37', '#6F4E37', '#E75480', '#FDF8F0', '#ff7f50', '#87ceeb'];
+
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDelay = Math.random() * 4 + 's';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confettiContainer.appendChild(confetti);
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

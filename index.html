@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Birthday Surprise!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7, #ffdde1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Merriweather', serif;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card-container {
+            perspective: 1000px; 
+        }
+
+        .card {
+            width: 320px;
+            height: 480px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 1rem;
+            transform: rotateZ(-6deg); 
+            background-color: #faf8f0; 
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj4NCiAgICA8ZmlsdGVyIGlkPSJub2lzZSI+DQogICAgICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjciIG51bU9jdGF2ZXM9IjUiIHN0aXRjaFRpbGVzPSJzdGl0Y2giPjwvZmVUdXJidWxlbmNlPg0KICAgICAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4xNSAwIj48L2ZlQ29sb3JNYXRyaXg+DQogICAgPC9maWx0ZXI+DQogICAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZHRoPSIzMDAiIGZpbGw9IiNmNWVlZGEiPjwvcmVjdD4NCiAgICA8cmVjdCB3aWR0aD0iMzAwIiBoZWpnaHQ9IjMwMCIgZmlsdGVyPSJ1cnMoI25vaXNlKSIgb3BhY2l0eT0iMC4xNSI+PC9yZWN0Pg0KPC9zdmc+');
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 
+                inset 0 0 15px rgba(0,0,0,0.1), 
+                0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: left center;
+        }
+
+        .card.is-flipped .card-cover {
+            transform: rotateY(-180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; 
+            border-radius: 1rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-face-front {
+            background-color: #f5eeda; 
+            border: 10px solid #d4cba4;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj4NCiAgICA8ZmlsdGVyIGlkPSJub2lzZSI+DQogICAgICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjciIG51bU9jdGF2ZXM9IjUiIHN0aXRjaFRpbGVzPSJzdGl0Y2giPjwvZmVUdXJidWxlbmNlPg0KICAgICAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4xNSAwIj48L2ZlQ29sb3JNYXRyaXg+DQogICAgPC9maWx0ZXI+DQogICAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZHRoPSIzMDAiIGZpbGw9IiNmNWVlZGEiPjwvcmVjdD4NCiAgICA8cmVjdCB3aWR0aD0iMzAwIiBoZWpnaHQ9IjMwMCIgZmlsdGVyPSJ1cnMoI25vaXNlKSIgb3BhY2l0eT0iMC4xNSI+PC9yZWN0Pg0KPC9zdmc+');
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1); 
+        }
+
+        .card-face-back {
+            background-color: #faf8f0; 
+            transform: rotateY(180deg);
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj4NCiAgICA8ZmlsdGVyIGlkPSJub2lzZSI+DQogICAgICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjciIG51bU9jdGF2ZXM9IjUiIHN0aXRjaFRpbGVzPSJzdGl0Y2giPjwvZmVUdXJidWxlbmNlPg0KICAgICAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4xNSAwIj48L2ZlQ29sb3JNYXRyaXg+DQogICAgPC9maWx0ZXI+DQogICAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZHRoPSIzMDAiIGZpbGw9IiNmNWVlZGEiPjwvcmVjdD4NCiAgICA8cmVjdCB3aWR0aD0iMzAwIiBoZWpnaHQ9IjMwMCIgZmlsdGVyPSJcnMoI25vaXNlKSIgb3BhY2l0eT0iMC4xNSI+PC9yZWN0Pg0KPC9zdmc+');
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.75rem;
+            color: #c86b85;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .card-subtitle {
+            font-family: 'Merriweather', serif;
+            font-size: 0.9rem;
+            color: #a08270;
+            margin-top: 0.5rem;
+        }
+
+        .sticker {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: #ffb6c1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 20px;
+            right: 20px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            transform: rotate(15deg);
+            border: 2px dashed rgba(255,255,255,0.7);
+        }
+
+        .sticker.cake-sticker {
+            width: 70px;
+            height: 70px;
+            background-color: #a9def9;
+            bottom: 80px;
+            left: 20px;
+            transform: rotate(-10deg);
+        }
+
+        .sticker svg {
+            width: 50px;
+            height: 50px;
+            color: #fff;
+        }
+
+        .wishes-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.25rem;
+            color: #c86b85;
+            margin-bottom: 1rem;
+        }
+
+        .wishes-text {
+            font-family: 'Merriweather', serif;
+            font-size: 1rem;
+            color: #776256;
+            line-height: 1.6;
+        }
+
+        .photo-placeholder {
+            width: 85%;
+            background-color: #fff;
+            border-radius: 0.5rem;
+            display: flex;
+            padding: 0.75rem;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            position: relative;
+            transform: rotate(-4deg);
+        }
+        
+        .photo-placeholder::before,
+        .photo-placeholder::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 25px;
+            background-color: rgba(255, 226, 155, 0.4); 
+            border-left: 1px solid rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .photo-placeholder::before {
+            top: -12px;
+            left: -18px;
+            transform: rotate(-40deg);
+        }
+        
+        .photo-placeholder::after {
+            bottom: -12px;
+            right: -15px;
+            transform: rotate(35deg);
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 0.25rem; 
+        }
+
+        .photo-caption {
+            font-family: 'Dancing Script', cursive;
+            margin-top: 2rem;
+            color: #a08270;
+            font-size: 1.25rem;
+            transform: rotate(-4deg);
+        }
+
+        .glass-button {
+            margin-top: 3rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 25s infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center overflow-hidden flex-col">
+    <div class="card-container">
+        <div id="birthdayCard" class="card">
+            
+             <div class="text-center">
+                <h2 class="wishes-title">For You...</h2>
+                <p class="wishes-text">
+                    Wishing you a day filled with love, joy, and laughter. May all your dreams and wishes come true this year.
+                    <br><br>
+                    You deserve all the happiness in the world.
+                    <br><br>
+                    With wishes,
+                    <br>
+                    👉🙂
+                </p>
+            </div>
+
+            <div class="card-cover">
+                <div class="card-face card-face-front p-6 text-center">
+                    <h1 class="card-title">Happy Birthday Priyankaaa💫</h1>
+                    <p class="card-subtitle">Click to open your surprise</p>
+                    
+                    <div class="sticker">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <div class="sticker cake-sticker">
+                       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M224,144a8,8,0,0,1-8,8H177.32l-12.8,42.66A8,8,0,0,1,156.81,200H99.19a8,8,0,0,1-7.71-5.34L78.68,152H40a8,8,0,0,1,0-16h40a8,8,0,0,1,7.71,5.34l7.63,25.43h49.32l7.63-25.43A8,8,0,0,1,176,136h40A8,8,0,0,1,224,144Zm-58.49-32.37a8,8,0,0,0-10.9-2.09L128,124.23l-26.61-14.69a8,8,0,0,0-10.9,12.92l32,17.6a8,8,0,0,0,10.9,0l32-17.6A8,8,0,0,0,165.51,111.63ZM232,80H213.27a40,40,0,0,0-74.54,0H43.27a40,40,0,0,0-74.54,0H24a8,8,0,0,0,0,16h4.73a40,40,0,0,0,74.54,0h95.46a40,40,0,0,0,74.54,0H232a8,8,0,0,0,0-16Z"></path></svg>
+                    </div>
+                </div>
+                
+                <!-- Back of the card (inside of cover, left page) -->
+                <div class="card-face card-face-back">
+                    <div class="photo-placeholder">
+                        <img src="./pic.jpg" alt="A lovely picture" onerror="this.onerror=null;this.src='https://placehold.co/300x450/f5eeda/c86b85?text=Her+Photo';">
+                    </div>
+                    <p class="photo-caption">A moment to remember</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="./dubai.html" target="_blank" class="glass-button">
+        Move to Today's NEWS
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.getElementById('birthdayCard');
+            const body = document.body;
+
+            card.addEventListener('click', () => {
+                card.classList.toggle('is-flipped');
+            });
+
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 15 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.bottom = `-20px`; 
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 25}s`;
+                particle.style.animationDuration = `${10 + Math.random() * 15}s`;
+                
+                body.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>

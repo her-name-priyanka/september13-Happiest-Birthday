@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priyankaaa's birthday cake</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #fbc2eb, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card-container {
+            perspective: 1000px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card-container:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card.is-flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; 
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.5rem; 
+            overflow: hidden; 
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .fancy-font {
+            font-family: 'Pacifico', cursive;
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+             animation: fadeIn 1s 0.4s ease-out forwards; 
+             opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <audio id="birthday-music" loop src="./hb5.m4a"></audio>
+
+    <div id="audio-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center cursor-pointer">
+        <div class="text-center text-white p-8 bg-black bg-opacity-50 rounded-lg">
+            <h2 class="text-2xl font-bold mb-2">Welcome Priyankaaa💫</h2>
+            <p class="text-lg">Click anywhere to start the music and enter.</p>
+        </div>
+    </div>
+
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        <h1 class="fancy-font text-5xl md:text-7xl text-white text-center mb-8 text-shadow animate-fade-in-up" style="text-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            Priyankaaa💫 let's cut the cake
+        </h1>
+
+        <div class="relative animate-fade-in">
+            <div id="cake-card" class="card card-container w-96 h-64 md:w-[32rem] md:h-[24rem] cursor-pointer group">
+                <div class="card-inner shadow-2xl rounded-3xl">
+                    <div class="card-face card-front bg-white">
+                        <img src="./full.jpg" 
+                             alt="A delicious chocolate celebration cake"
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="card-face card-back bg-white">
+                         <img src="./cut.png" 
+                              alt="A slice of rainbow cake on a plate" 
+                              class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <p id="click-text-indicator" class="fancy-font text-white text-xl mt-6 transition-opacity duration-500 ease-in-out animate-fade-in" style="animation-delay: 0.5s; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Click on the cake Priyankaaa💫</p>
+
+       <div class="flex items-center gap-6 mt-10 animate-fade-in" style="animation-delay: 0.6s;">
+
+    <a href="./dresses.html" class="glass-button text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+        Change Outfit
+    </a>
+
+    <a href="./cafe.html" class="glass-button text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center gap-2">
+        Let's go CAFE
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+    </a>
+    
+</div>
+    </div>
+
+    <script>
+        function popConfetti() {
+            const count = 200;
+            const defaults = {
+                origin: { y: 0.6 },
+                colors: ['#FBC2EB', '#A6C1EE', '#FFFFFF', '#A18CD1']
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
+
+        const card = document.getElementById('cake-card');
+        const clickTextIndicator = document.getElementById('click-text-indicator');
+        
+        card.addEventListener('click', function() {
+            card.classList.toggle('is-flipped');
+            popConfetti();
+            if (clickTextIndicator) {
+                clickTextIndicator.classList.add('opacity-0');
+            }
+        });
+
+        const audioOverlay = document.getElementById('audio-overlay');
+        const backgroundMusic = document.getElementById('birthday-music');
+
+        function startAudio() {
+            backgroundMusic.play().catch(error => {
+                console.error("Audio could not be played:", error);
+            });
+            
+            audioOverlay.style.transition = 'opacity 0.5s ease';
+            audioOverlay.style.opacity = '0';
+            setTimeout(() => {
+                audioOverlay.style.display = 'none';
+            }, 500);
+        }
+
+        audioOverlay.addEventListener('click', startAudio, { once: true });
+    </script>
+
+</body>
+</html>

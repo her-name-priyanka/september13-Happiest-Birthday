@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fireworks For Priyankaaa💫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+        #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between min-h-screen bg-black p-8">
+    
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div class="relative z-10 text-center glass-card px-6 py-4">
+        <p class="text-gray-300 text-sm md:text-base mb-1">New York is celebrating Queen's Birthday</p>
+        <h1 class="text-white text-xl md:text-3xl font-bold tracking-wide">Priyankaaa's💫 Birthday</h1>
+    </div>
+
+    <div class="relative z-10 flex gap-4">
+        <a href="./dubai.html" class="py-2 px-6 glass-card text-center text-white font-bold text-base transition-transform transform hover:scale-105 shadow-lg no-underline">
+            Back to Dubai
+        </a>
+
+        <a href="./dresses.html" target="_blank" class="py-2 px-6 glass-card text-center text-white font-bold text-base transition-transform transform hover:scale-105 shadow-lg no-underline">
+            Let's Ready for Special Day
+        </a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        let fireworks = [];
+        let particles = [];
+        let fireworkCounter = 0;
+        
+        const bgImage = new Image();
+        bgImage.src = './nyc1.jpg'; 
+
+        const explosionSynth = new Tone.MembraneSynth({
+            pitchDecay: 0.05,
+            octaves: 10,
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.001, decay: 0.4, sustain: 0.01, release: 1.4, attackCurve: 'exponential' }
+        }).toDestination();
+
+        bgImage.onload = () => {
+            setupFireworks();
+            animateFireworks();
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            Tone.start();
+            const startAudio = () => {
+                Tone.start();
+                window.removeEventListener('click', startAudio);
+            };
+            window.addEventListener('click', startAudio);
+        });
+
+        function setupFireworks() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            setInterval(() => launchFirework(), 400); 
+        }
+
+        class Firework {
+            constructor(x, y, targetX, targetY, color, pattern, size) {
+                this.x = x;
+                this.y = y;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.color = color;
+                this.pattern = pattern;
+                this.size = size;
+                this.angle = Math.atan2(targetY - y, targetX - x);
+                this.speed = 2; 
+                this.acceleration = 1.02; 
+                this.coordinates = [];
+                this.coordinateCount = 3;
+                while (this.coordinateCount--) {
+                    this.coordinates.push([this.x, this.y]);
+                }
+            }
+
+            update(index) {
+                this.coordinates.pop();
+                this.coordinates.unshift([this.x, this.y]);
+                this.speed *= this.acceleration;
+                const vx = Math.cos(this.angle) * this.speed;
+                const vy = Math.sin(this.angle) * this.speed;
+                this.x += vx;
+                this.y += vy;
+                
+                if (Math.hypot(this.x - this.targetX, this.y - this.targetY) < 5) {
+                    createParticles(this.targetX, this.targetY, this.color, this.pattern, this.size);
+                    fireworks.splice(index, 1);
+                    explosionSynth.triggerAttackRelease('C2', '8n', Tone.now());
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color, angle) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.angle = angle;
+                this.speed = Math.random() * 2 + 0.5; 
+                this.friction = 0.97;
+                this.gravity = 0.05; 
+                this.alpha = 1;
+                this.decay = Math.random() * 0.03 + 0.015;
+                this.coordinates = [];
+                this.coordinateCount = 5;
+                 while (this.coordinateCount--) {
+                    this.coordinates.push([this.x, this.y]);
+                }
+            }
+
+            update(index) {
+                this.coordinates.pop();
+                this.coordinates.unshift([this.x, this.y]);
+                this.speed *= this.friction;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed + this.gravity;
+                this.alpha -= this.decay;
+                
+                if (this.alpha <= this.decay) {
+                    particles.splice(index, 1);
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y);
+                const r = parseInt(this.color.slice(1,3),16);
+                const g = parseInt(this.color.slice(3,5),16);
+                const b = parseInt(this.color.slice(5,7),16);
+                ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${this.alpha})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+        
+        function launchFirework() {
+            fireworkCounter++;
+
+            const padding = 250; 
+            const startX = canvas.width / 2;
+            const startY = canvas.height;
+            const targetX = Math.random() * (canvas.width - padding * 2) + padding;
+            const targetY = Math.random() * (canvas.height / 3.5) + 100;
+            const color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            
+            let pattern;
+            let size = 'normal';
+
+            if (fireworkCounter === 5 || fireworkCounter === 8) {
+                pattern = 'name';
+            } else {
+                const regularPatterns = ['ring', 'heart', 'doubleRing'];
+                pattern = regularPatterns[Math.floor(Math.random() * regularPatterns.length)];
+                if (Math.random() > 0.7) {
+                    size = 'large';
+                }
+            }
+
+            fireworks.push(new Firework(startX, startY, targetX, targetY, color, pattern, size));
+        }
+        
+        function createParticles(x, y, color, pattern, size = 'normal') {
+            const particleCount = (size === 'large') ? 250 : 150;
+            const tempCtx = document.createElement('canvas').getContext('2d');
+            tempCtx.fillStyle = color;
+            const rgbColor = tempCtx.fillStyle;
+
+            switch(pattern) {
+                case 'name':
+                    const tempCanvas = document.createElement('canvas');
+                    const tCtx = tempCanvas.getContext('2d');
+                    const text = "Priyankaaa";
+                    tCtx.font = 'bold 100px "Segoe UI"';
+                    const textMetrics = tCtx.measureText(text);
+                    tempCanvas.width = textMetrics.width;
+                    tempCanvas.height = 120;
+                    tCtx.font = 'bold 100px "Segoe UI"';
+                    tCtx.fillStyle = '#FFF';
+                    tCtx.fillText(text, 0, 90);
+
+                    const pixels = tCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                    for (let pY = 0; pY < pixels.height; pY += 4) {
+                        for (let pX = 0; pX < pixels.width; pX += 4) {
+                            const index = (pY * pixels.width + pX) * 4;
+                            if (pixels.data[index + 3] > 128) {
+                                const targetX = pX - tempCanvas.width / 2;
+                                const targetY = pY - 90;
+                                
+                                const angle = Math.atan2(targetY, targetX);
+                                const distance = Math.hypot(targetX, targetY);
+
+                                const particle = new Particle(x, y, rgbColor, angle);
+                                particle.speed = distance * 0.06;
+                                particle.gravity = 0;
+                                particle.friction = 0.96;
+                                particle.decay = 0.008;
+
+                                particles.push(particle);
+                            }
+                        }
+                    }
+                    break;
+                case 'heart':
+                    for (let i = 0; i < particleCount; i++) {
+                        const angle = (Math.PI * 2 / particleCount) * i;
+                        const heartX = 16 * Math.pow(Math.sin(angle), 3);
+                        const heartY = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+                        const finalAngle = Math.atan2(heartY, heartX);
+                        const p = new Particle(x, y, rgbColor, finalAngle);
+                        if (size === 'large') p.speed *= 1.5;
+                        particles.push(p);
+                    }
+                    break;
+                case 'doubleRing':
+                     for (let i = 0; i < particleCount; i++) {
+                        const angle = (Math.PI * 2 / particleCount) * i;
+                        const p1 = new Particle(x, y, rgbColor, angle);
+                        const p2 = new Particle(x, y, rgbColor, angle);
+                        p2.speed *= 0.5;
+                        if (size === 'large') {
+                            p1.speed *= 1.5;
+                            p2.speed *= 1.5;
+                        }
+                        particles.push(p1, p2);
+                    }
+                    break;
+                default: 
+                    for (let i = 0; i < particleCount; i++) {
+                        const angle = (Math.PI * 2 / particleCount) * i;
+                        const p = new Particle(x, y, rgbColor, angle);
+                        if (size === 'large') p.speed *= 1.5;
+                        particles.push(p);
+                    }
+                    break;
+            }
+        }
+
+        function animateFireworks() {
+            requestAnimationFrame(animateFireworks);
+            ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            fireworks.forEach((fw, i) => {
+                fw.update(i);
+                fw.draw();
+            });
+
+            particles.forEach((p, i) => {
+                p.update(i);
+                p.draw();
+            });
+        }
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
